@@ -69,12 +69,12 @@ def clump_tracker(fprefix, param=None, directory=None, nsmooth=32, verbose=True)
     # Run the clump (halo) finder
     if verbose: print "\n\nRunning clump finder on {} files\n\n".format(nfiles)
     clumpnum_list = pFind_clumps(fnames, nsmooth, param, verbose=verbose)
-    nclumps = np.zeros(nfiles, dtype=int)
+    nclumps = np.zeros(nfiles, dtype=int)   
     
     for i, clumpnums in enumerate(clumpnum_list):
         
         nclumps[i] = clumpnums.max()
-        
+    
     if nclumps.max() <= 0:
         
         if verbose: print 'No clumps found'
@@ -625,27 +625,26 @@ def clump_properties(f, clump_nums):
     if clump_nums.max() < 1:
         # Return none if there are no clumps
         return
-    
+   
     if isinstance(f, str):        
         f = pynbody.load(f)
         
     try:
         
-        iorder = f['iord']
+        iorder = f.g['iord']
         
     except KeyError:
         
         print 'Warning.  iorder not found.  Assuming 0,1,2,3...'
-        iorder = np.arange(len(f))
+        iorder = np.arange(len(f.g))
         
-    particle_nums = np.arange(len(f))
-        
+    particle_nums = np.arange(len(f.g))
     # Only include particles in a clump AND that are not star particles
-    mask1 = clump_nums > 0
     n_star = len(f.s)
-    mask1[-(n_star+1):-1] = False
+    clump_nums = clump_nums[:-(n_star)]
+    mask1 = clump_nums > 0
     clump_nums1 = clump_nums[mask1]
-    f1 = f[mask1]
+    f1 = f.g[mask1]
     iorder1 = iorder[mask1]
     particle_nums1 = particle_nums[mask1]
     
