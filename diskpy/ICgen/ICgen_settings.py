@@ -58,13 +58,13 @@ See the base classes for more info
 
 __version__ = "$Revision: 7 $"
 # $Source$
-__iversion__ = int(filter(str.isdigit,__version__))
+__iversion__ = int([i for i in __version__.split() if i.isdigit()][0])
 
-from ICgen_utils import pickle_import
+from .ICgen_utils import pickle_import
 
 import pynbody
 SimArray = pynbody.array.SimArray
-import cPickle as pickle
+import _pickle as pickle
 import numpy as np
 import os
 
@@ -116,13 +116,13 @@ class settingsBase:
         default_dict = {default[0]: default[1] for default in defaults}
         self.__dict__.update(default_dict)
         # Now read in kwargs
-        goodkeys = self.__dict__.keys()
-        for k in kwargs.keys():
+        goodkeys = list(self.__dict__)
+        for k in list(kwargs):
             
             if k not in goodkeys:
                 
-                raise ValueError, 'Unrecognized option {}. Allowed options:{}'\
-                    .format(k, goodkeys)
+                raise ValueError('Unrecognized option {}. Allowed options:{}'\
+                    .format(k, goodkeys))
                 
             # Ignore Nones
             if kwargs[k] is None:
@@ -144,16 +144,16 @@ class settingsBase:
         if hasattr(self, '_defaults') and self._defaults is not None:
             
             string = repr_defaults(self._defaults)
-            print string
+            print(string)
             
         # if you contain other settings objects, print their defaults
-        for k, v in self.__dict__.iteritems():
+        for k, v in self.__dict__.items():
             
             if isinstance(v, settingsBase):
                 
-                print '\n----------------------------'
-                print k
-                print ''
+                print('\n----------------------------')
+                print(k)
+                print('')
                 v.print_defaults()
         
 class kindSettingsBase(settingsBase):
@@ -203,7 +203,7 @@ class kindSettingsBase(settingsBase):
             
             if value not in self._defaultlayouts.keys():
                 
-                raise ValueError, 'Unrecognized kind {0}'.format(value)
+                raise ValueError('Unrecognized kind {0}'.format(value))
                 
             self._set_defaults()
             
@@ -219,11 +219,11 @@ class kindSettingsBase(settingsBase):
             line = 'kind: {}'.format(layout)
             if layout == self.kind:
                 line += '   (CURRENT KIND)'
-            print line
-            print repr_defaults(self._defaultlayouts[layout], indent=2)
+            print(line)
+            print(repr_defaults(self._defaultlayouts[layout], indent=2))
         
-        print 'Settings for all kinds:'
-        print repr_defaults(self._globaldefaults, indent=2)
+        print('Settings for all kinds:')
+        print(repr_defaults(self._globaldefaults, indent=2))
     
 class filenames(settingsBase):
     """
@@ -521,7 +521,7 @@ class settings(settingsBase):
             if not (hasattr(self, 'filenames') \
                     and hasattr(self.filenames,'settings_filename')):
                 
-                raise RuntimeError,'No settings_filename defined.  Cannot save'
+                raise RuntimeError('No settings_filename defined.  Cannot save')
                 
             else:
                 
@@ -530,7 +530,7 @@ class settings(settingsBase):
         f = open(settings_filename,'wb')
         pickle.dump(self.__dict__,f,2)
         f.close()
-        print 'Settings saved to {0}'.format(settings_filename)
+        print('Settings saved to {0}'.format(settings_filename))
         # Update the settings_filename
         self.settings_filename = settings_filename
         
@@ -613,7 +613,7 @@ def repr_settings(setting):
     string = '------------------------\n'
     string += '{0}\n\n'.format(header)
     
-    for key,val in setting.__dict__.iteritems():
+    for key,val in setting.__dict__.items():
             
             if key[0] == '_':
                 
@@ -636,9 +636,9 @@ def repr_settings(setting):
     
 def print_settings(setting):
     
-    print repr_settings(setting)
+    print(repr_settings(setting))
 
 def _colprint(data):
     col_width = max(len(word) for row in data for word in row) + 2  # padding
     for row in data:
-        print "".join(word.ljust(col_width) for word in row)
+        print("".join(word.ljust(col_width) for word in row))

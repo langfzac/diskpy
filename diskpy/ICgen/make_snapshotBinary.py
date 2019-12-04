@@ -16,9 +16,9 @@ SimArray = pynbody.array.SimArray
 import numpy as np
 import math
 import gc
-import AddBinary
-import calc_velocity
-import ICgen_utils
+from . import AddBinary
+from . import calc_velocity
+from . import ICgen_utils
 from diskpy import global_settings
 
 from diskpy.utils import match_units, strip_units, configsave
@@ -37,13 +37,13 @@ def snapshot_gen(ICobj):
     star at origin with binary system who's center of mass lies at the origin and who's mass m1 +m2 = M
     """
     
-    print 'Generating snapshot...'
+    print('Generating snapshot...')
     # Constants
     G = SimArray(1.0,'G')
     # ------------------------------------
     # Load in things from ICobj
     # ------------------------------------
-    print 'Accessing data from ICs'
+    print('Accessing data from ICs')
     settings = ICobj.settings
     
     # snapshot file name
@@ -76,7 +76,7 @@ def snapshot_gen(ICobj):
     # -------------------------------------------------
     # Assign output
     # -------------------------------------------------
-    print 'Assigning data to snapshot'
+    print('Assigning data to snapshot')
     # Get units all set up
     m_unit = m_star.units
     pos_unit = r.units
@@ -128,7 +128,7 @@ def snapshot_gen(ICobj):
     
     # CALCULATE VELOCITY USING calc_velocity.py.  This also estimates the 
     # gravitational softening length eps
-    print 'Calculating circular velocity'
+    print('Calculating circular velocity')
     preset = settings.changa_run.preset
     max_particles = global_settings['misc']['max_particles']
     calc_velocity.v_xy(snapshot, param, changa_preset=preset, max_particles=max_particles)
@@ -213,7 +213,7 @@ def snapshot_gen(ICobj):
     snapshotBinary.star[0]['eps'] = SimArray(math.fabs(d)/4.0,pos_unit)
     snapshotBinary.star[1]['eps'] = SimArray(math.fabs(d)/4.0,pos_unit)
  
-    print 'Wrapping up'
+    print('Wrapping up')
     # Now set the star particle's tform to a negative number.  This allows
     # UW ChaNGa treat it as a sink particle.
     snapshotBinary.star['tform'] = -1.0

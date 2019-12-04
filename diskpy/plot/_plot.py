@@ -38,7 +38,7 @@ def savefig(savename, exts=('pdf', 'png'), verbose=True, ext_kwargs=None, **kwar
         Extra args are passed to matplotlib.pyplot.savefig
     """
     if not hasattr(exts, '__iter__') or len(exts) < 1:
-        raise ValueError, 'Cannot iterate over provided extensions'
+        raise ValueError('Cannot iterate over provided extensions')
     if ext_kwargs is None:
         ext_kwargs = [{}] * len(exts)
     
@@ -48,7 +48,7 @@ def savefig(savename, exts=('pdf', 'png'), verbose=True, ext_kwargs=None, **kwar
         save_args.update(extra_args)
         plt.savefig(fullname, **save_args)
         if verbose:
-            print "saved:", fullname
+            print("saved:", fullname)
 
 def colorCodeArray(x1, x2, cmap='Reds'):
     """
@@ -294,7 +294,7 @@ def lineanimate(x, y, *args, **kwargs):
         
         if verbose:
             
-            print i
+            print(i)
             
         return line, 
     
@@ -308,7 +308,7 @@ def lineanimate(x, y, *args, **kwargs):
         os.remove(filename)
         
     anim.save(filename, fps=fps)
-    print 'Movie saved to ' + filename
+    print('Movie saved to ' + filename)
     
 def heatmap(x, y, z, bins=10, plot=True, output=False):
     """

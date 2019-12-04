@@ -22,8 +22,8 @@ import diskpy
 from diskpy import global_settings
 from diskpy.utils import match_units, strip_units
 from diskpy.pychanga import make_director, make_param, setup_units
-import calc_velocity
-import AddBinary
+from . import calc_velocity
+from . import AddBinary
 
 # Constants
 G = SimArray(1.0,'G')
@@ -45,7 +45,7 @@ def snapshot_gen(IC):
         dictionary containing info for a .param file
     """
     
-    print 'Generating snapshot...'   
+    print('Generating snapshot...')
     # Initialize snapshot
     snapshot = init_snapshot(IC)
     # Make param file
@@ -55,14 +55,14 @@ def snapshot_gen(IC):
     # CALCULATE VELOCITY USING calc_velocity.py.  This also estimates the 
     # gravitational softening length eps and a good timestep
     # -------------------------------------------------
-    print 'Calculating circular velocity'
+    print('Calculating circular velocity')
     preset = IC.settings.changa_run.preset
     changa_args = IC.settings.changa_run.changa_args
     max_particles = global_settings['misc']['max_particles']
     dDelta = calc_velocity.v_xy(snapshot, param, \
     changa_preset=preset, max_particles=max_particles, changa_args=changa_args)
     param['dDelta'] = dDelta    
-    print 'Calculated time step.  dDelta = ', dDelta
+    print('Calculated time step.  dDelta = ', dDelta)
     gc.collect()
     
     # Create director file
@@ -74,7 +74,7 @@ def snapshot_gen(IC):
         snapshot = make_binary(IC, snapshot)
         
     # Finalize
-    print 'Wrapping up'
+    print('Wrapping up')
     setup_sinks(IC, snapshot, param)
     
     return snapshot, param, director

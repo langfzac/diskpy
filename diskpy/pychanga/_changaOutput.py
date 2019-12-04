@@ -95,7 +95,7 @@ def _load_tipsyarray3d_ascii(filename, low_mem=False):
     to the user to figure out which elements correspond to which families
     """
     if not _is_ascii_tipsy(filename):
-        raise ValueError, '{} does not appear to be an ASCII array file'.format(filename)
+        raise ValueError('{} does not appear to be an ASCII array file'.format(filename))
     if low_mem:
         # Perform ASCII read
         with open(filename, 'r') as f:
@@ -165,7 +165,7 @@ def load_acc(filename, param_name = None, low_mem = False):
     if param_name is not None:
 
         # If a param name is set or a param file has been found:
-        print 'Loading param file: {}'.format(param_name)
+        print('Loading param file: {}'.format(param_name))
         param = configparser(param_name, ftype='param')
 
     else:
@@ -210,10 +210,10 @@ def walltime(filename, verbose=True):
     walltime_avg = datetime.timedelta(seconds = wall_per_step.mean())
     
     if verbose:
-        print 'Total walltime: '
-        print str(walltime_total)
-        print 'Average walltime per step:'
-        print str(walltime_avg)
+        print('Total walltime: ')
+        print(str(walltime_total))
+        print('Average walltime per step:')
+        print(str(walltime_avg))
 
     return wall_per_step
     

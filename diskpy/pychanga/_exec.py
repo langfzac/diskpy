@@ -47,9 +47,9 @@ def runZeroSteps(fname, paramname, overwrite_aux=False, overwrite_snap=False,
     
     # Load stuff/init
     if not os.path.exists(fname):
-        raise ValueError, 'Could not file {} to run'.format(fname)
+        raise ValueError('Could not file {} to run'.format(fname))
     directory = os.path.realpath(os.path.dirname(fname))
-    print 'directory:', directory
+    print('directory:', directory)
     fname = os.path.split(fname)[-1]
     param = diskpy.utils.configparser(paramname, 'param')
     
@@ -82,7 +82,7 @@ def runZeroSteps(fname, paramname, overwrite_aux=False, overwrite_snap=False,
                 kwargs['changa_args'] = ''
             kwargs['changa_args'] += ' -n 0'
             cmd = diskpy.pychanga.changa_command(temp_param, **kwargs)
-            print 'running with command:', cmd
+            print('running with command:', cmd)
             diskpy.pychanga.changa_run(cmd, require_success=True)
             
             # Move generated files
@@ -99,13 +99,13 @@ def runZeroSteps(fname, paramname, overwrite_aux=False, overwrite_snap=False,
                 else:
                     copyfile = False
                 if copyfile:
-                    print 'moving {} to {}'.format(outfile, dest)
+                    print('moving {} to {}'.format(outfile, dest))
                     shutil.move(outfile, dest)
                 
         
         finally:
             # Clean-up
-            print 'cleaning up'
+            print('cleaning up')
             tempfiles = glob.glob(temp_prefix + '*')
             for f in tempfiles:
                 try:
@@ -114,7 +114,7 @@ def runZeroSteps(fname, paramname, overwrite_aux=False, overwrite_snap=False,
                     shutil.rmtree(f)
     finally:
         os.chdir(cwd)
-    print 'done'
+    print('done')
 
 def est_time_step(param_name, preset='default', dDelta0=100, changa_args='', runner_args=''):
     """
@@ -274,7 +274,7 @@ def changa_run(command, verbose = True, force_wait=False, log_file=None,
     
     if not success and require_success:
         
-        raise RuntimeError, "ChaNGa did not complete successfully"
+        raise RuntimeError("ChaNGa did not complete successfully")
         
     if return_success:
         
@@ -331,7 +331,7 @@ changa_args='', runner_args='',restart_dir=None):
         
         if '' == changa_bin:
             
-            raise RuntimeError, 'Could not find ChaNGa.  Try different preset'
+            raise RuntimeError('Could not find ChaNGa.  Try different preset')
     
     # Merge user defined extra arguments    
     runner_args = ' '.join([preset_list[1], runner_args])
@@ -400,7 +400,7 @@ def arg_cat(arg_list):
                 
     args_str = ''
     
-    for key, val in args_dict.iteritems():
+    for key, val in args_dict.items():
         
         if val == '':
             

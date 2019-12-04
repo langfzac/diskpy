@@ -18,7 +18,7 @@ Created on Mon Aug 11 14:38:17 2014
 @author: ibackus
 """
 
-import cPickle as pickle
+import _pickle as pickle
 import os
 import socket
 from textwrap import TextWrapper
@@ -77,7 +77,7 @@ def recursive_update(old, new):
     
     Update old with the values in new
     """
-    for k, v in new.iteritems():
+    for k, v in new.items():
         
         if isinstance(v, dict) and isinstance(old.get(k, None), dict):
             recursive_update(old[k], v)
@@ -118,7 +118,7 @@ class settings(dict):
             saved_settings = settings.loader(self.filename)
             recursive_update(current_settings, saved_settings)
             
-        for key, val in current_settings.iteritems():
+        for key, val in current_settings.items():
             
             self[key] = val
             
@@ -132,22 +132,22 @@ class settings(dict):
             
             wrapper = TextWrapper(80, tab, tab)
             
-            for key, val in a.iteritems():
+            for key, val in a.items():
                 
                 if isinstance(val, dict):
                     
-                    print ''
-                    print wrapper.fill('{0}'.format(key))
+                    print('')
+                    print(wrapper.fill('{0}'.format(key)))
                     #print n_tabs*'  ', key, ':'
                     print_dict(val, n_tabs+1)
-                    print ''
+                    print('')
                     
                 else:
                     
                     #print n_tabs*'  ',key,val
-                    print wrapper.fill('{0} : {1}'.format(key,val))
+                    print(wrapper.fill('{0} : {1}'.format(key,val)))
                     
-        print '**** GLOBAL SETTINGS ****'
+        print('**** GLOBAL SETTINGS ****')
         print_dict(self)
             
     def restore_defaults(self):
@@ -160,7 +160,7 @@ class settings(dict):
             
             self.pop(key, None)
             
-        for key, val in defaults.iteritems():
+        for key, val in defaults.items():
             
             self[key] = val
             

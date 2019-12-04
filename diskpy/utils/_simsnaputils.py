@@ -37,8 +37,8 @@ def list_to_SimArray(x):
                 x_out[i] = xi.in_units(units)
             except AttributeError:
                 if not pynbody.units.has_units(xi):
-                    raise ValueError, "Cannot place value without units "\
-                    "into array with units"
+                    raise ValueError("Cannot place value without units "\
+                    "into array with units")
                 else:
                     raise
                     
@@ -134,7 +134,7 @@ def polar_phi_hat(f, array):
     """
     val = f[array]
     if val.shape[1] not in (2, 3):
-        raise ValueError, "array to get phi-hat component of must be 2D or 3D"
+        raise ValueError("array to get phi-hat component of must be 2D or 3D")
     return (f['x']*val[:,1] - f['y'] * val[:,0])/f['rxy']
 
 def polar_r_hat(f, array):
@@ -143,5 +143,5 @@ def polar_r_hat(f, array):
     """
     val = f[array]
     if val.shape[1] not in (2, 3):
-        raise ValueError, "array to get phi-hat component of must be 2D or 3D"
+        raise ValueError("array to get phi-hat component of must be 2D or 3D")
     return (f['x'] * val[:,0] + f['y'] * val[:,1])/f['rxy']

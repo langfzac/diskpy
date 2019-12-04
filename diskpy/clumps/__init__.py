@@ -7,8 +7,8 @@ Created on Mon May 11 23:28:56 2015
 @author: ibackus
 """
 
-from _clutils import loadhalos
-import clumpfinding
-import simclumps
+from ._clutils import loadhalos
+from . import clumpfinding
+from . import simclumps
 
 __all__ = ['loadhalos', 'clumpfinding', 'simclumps']

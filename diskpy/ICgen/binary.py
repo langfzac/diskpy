@@ -7,7 +7,7 @@ that was read in using pynbody.load("snapshot.name").  Just need to pass a strin
 import numpy as np
 
 # Import my binary star module that continue relevant routines
-import AddBinary
+from . import AddBinary
 import pynbody
 SimArray = pynbody.array.SimArray
 
@@ -84,7 +84,7 @@ class Binary(object):
             self.computeOrbElems()
 
         else:
-            print "Default Binary init"
+            print("Default Binary init")
             self.r = SimArray(np.zeros((1, 3)),'au')
             self.v = SimArray(np.zeros((1, 3)),'km s**-1')
             self.m1 = SimArray(0.0,'Msol')

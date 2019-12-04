@@ -8,7 +8,7 @@ Note on inputs: Most (if not all?) functions are designed to be used with SimArr
 # Imports
 import numpy as np
 import re
-import AddBinary
+from . import AddBinary
 import pynbody
 from scipy import interpolate
 from scipy.optimize import fsolve
@@ -723,8 +723,8 @@ def calcPoissonVsRadius(s,rBinEdges):
             poisson[i] = r/np.sqrt(N)
         else:
             poisson[i] = 0.0
-	
-	return poisson
+    
+    return poisson
 	
 #end function
 	

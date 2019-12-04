@@ -30,8 +30,8 @@ def setDustfrac(f, dustFrac=0.01, scale_mass=False):
     """
     if np.any((dustFrac == 1.0 )) and scale_mass:
         
-        raise ValueError, "Cannot scale mass and set dust fraction to 1.0"\
-            " (divide by zero)"
+        raise ValueError("Cannot scale mass and set dust fraction to 1.0"\
+            " (divide by zero)")
         
     if len(f) > 0 and dustFrac is not None:
         

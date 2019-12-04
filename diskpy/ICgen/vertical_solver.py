@@ -96,7 +96,7 @@ class vertical_solver():
         residual for density of form exp(-z^2/2h^2)
         """
         sol = fmin(self._h_residual, h0, disp=False)
-        print 'h:', sol
+        print('h:', sol)
         return sol
         
     def _drho(self, rho):
@@ -200,7 +200,7 @@ class vertical_solver():
         """
         # Set up the default options
         options = {'maxiter': 150, 'verbose': False}
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             
             options[k] = v
         
@@ -215,7 +215,7 @@ class vertical_solver():
         except NoConvergence as err:
             # Assume it didn't converge because f_tol was too strict
             # Read exception
-            print 'Didnt converge'
+            print('Didnt converge')
             rho = err.args[0]
         
         rho[rho < 0] = 0
@@ -287,11 +287,11 @@ class vertical_solver():
         residual /= rho.max()
         # measure height of the solution
         hmeas = np.sqrt((rho*z**2).sum()/rho.sum())
-        print 'h(estimate): {}\nh(best): {}\nh(measured): {}'\
-        .format(h[-1], h[best], hmeas)
-        print 'residuals normalized by rho:'
-        print '\tbest: {}'.format(residual[best])
-        print '\test: {}'.format(residual[-1])
+        print('h(estimate): {}\nh(best): {}\nh(measured): {}'\
+        .format(h[-1], h[best], hmeas))
+        print('residuals normalized by rho:')
+        print('\tbest: {}'.format(residual[best]))
+        print('\test: {}'.format(residual[-1]))
         self.rho = rho
         self._setup_results()
         

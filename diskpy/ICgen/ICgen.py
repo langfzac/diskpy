@@ -8,29 +8,29 @@ Created on Wed Mar 12 12:48:33 2014
 __version__ = "$Revision: 4 $"
 # $Source$
 
-__iversion__ = int(filter(str.isdigit,__version__))
+__iversion__ = int([i for i in __version__.split() if i.isdigit()][0])
 
 # External modules
 import pynbody
 SimArray = pynbody.array.SimArray
 import numpy as np
 import os
-import cPickle as pickle
+import _pickle as pickle
 from warnings import warn
 
 # ICgen modules
-import calc_temp
-import pos_class
-import make_snapshot
-import make_snapshotBinary
-import make_snapshotSType
-import make_snapshotSTypeSupplied
-import ICgen_settings
-import ICgen_utils
-import make_sigma
-import sigma_profile
+from . import calc_temp
+from . import pos_class
+from . import make_snapshot
+from . import make_snapshotBinary
+from . import make_snapshotSType
+from . import make_snapshotSTypeSupplied
+from . import ICgen_settings
+from . import ICgen_utils
+from . import make_sigma
+from . import sigma_profile
 
-from rhosolver import rhosolver, loadrho
+from .rhosolver import rhosolver, loadrho
 
 # diskpy modules
 from diskpy.utils import match_units, configsave
@@ -187,7 +187,7 @@ def Qest(ICobj, r=None):
     """
     if not hasattr(ICobj, 'sigma'):
         
-        raise ValueError, 'Could not find surface density profile (sigma)'
+        raise ValueError('Could not find surface density profile (sigma)')
         
     G = SimArray(1.0, 'G')
     kB = SimArray(1.0, 'k')
@@ -268,14 +268,14 @@ def save(ICobj, filename=None):
         save_dict['snapshot_param'] = ICobj.snapshot_param
         param_name = ICobj.settings.filenames.paramName
         configsave(ICobj.snapshot_param, param_name)
-        print 'param file saved to {0}'.format(param_name)
+        print('param file saved to {0}'.format(param_name))
         
     if hasattr(ICobj, 'snapshot_director'):
         
         save_dict['snapshot_director'] = ICobj.snapshot_director
         director_name = ICobj.settings.filenames.directorName
         configsave(ICobj.snapshot_director, director_name)
-        print 'director file saved to {0}'.format(director_name)
+        print('director file saved to {0}'.format(director_name))
         
     # --------------------------------------------------
     # SAVE
@@ -300,7 +300,7 @@ def save(ICobj, filename=None):
         
     # Save the save dictionary
     pickle.dump(save_dict,open(filename,'wb'), protocol=2)
-    print 'Initial conditions saved to {0}'.format(filename)        
+    print('Initial conditions saved to {0}'.format(filename)) 
     
 def load(filename):
        
@@ -347,18 +347,18 @@ def load(filename):
         
     if 'rho' in input_dict:
         
-        print 'loading rho'
+        print('loading rho')
         ICobj.add.rho(input_dict['rho'])
         
     if 'pos' in input_dict:
         
-        print 'loading pos'
+        print('loading pos')
         ICobj.pos = input_dict['pos']
         ICobj.pos._parent = ICobj
         
     if 'snapshotName' in input_dict:
         
-        print 'loading snapshot'
+        print('loading snapshot')
         fname = input_dict['snapshotName']
         
         try:
@@ -366,18 +366,18 @@ def load(filename):
             ICobj.snapshot = pynbody.load(fname)
             if 'snapshot_param' in input_dict:
         
-                print 'loading param'
+                print('loading param')
                 ICobj.snapshot_param = input_dict['snapshot_param']
                 
             if 'snapshot_director' in input_dict:
                 
-                print 'loading director'
+                print('loading director')
                 ICobj.snapshot_director = input_dict['snapshot_director']
             
         except IOError:
             
             warn('Could not find snapshot ({0})'.format(fname))
-            print 'Could not find snapshot ({0})'.format(fname)
+            print('Could not find snapshot ({0})'.format(fname))
         
     
 
@@ -455,7 +455,7 @@ class add:
         """
         loadrho(self._parent, rho_dict)
                 
-        print 'rho stored in <IC instance>.rho'
+        print('rho stored in <IC instance>.rho')
         
 
 class maker:
@@ -505,7 +505,7 @@ class maker:
         # and now, set up the interior temperature profile
         self._parent.T.setup_interior()
         
-        print 'Sigma stored in <IC instance>.sigma'
+        print('Sigma stored in <IC instance>.sigma')
         
     def rho_gen(self, **kwargs):
         """
@@ -520,14 +520,14 @@ class maker:
         # Check that sigma has been generated
         if not hasattr(self._parent, 'sigma'):
             
-            raise RuntimeError,'Must load/generate sigma before calculating rho'
+            raise RuntimeError('Must load/generate sigma before calculating rho')
             
         rho = rhosolver(self._parent)
         rho.solve(**kwargs)
         # Save to ICobj
         self._parent.rho = rho
         
-        print 'rho stored in <IC instance>.rho'
+        print('rho stored in <IC instance>.rho')
         
     def pos_gen(self, method = None):
         """
@@ -578,7 +578,7 @@ class maker:
             
         else:
             
-            print "Invalid starMode given in ICobj.  Assuming default single star."
+            print("Invalid starMode given in ICobj.  Assuming default single star.")
             snapshot, snapshot_param, snapshot_director = \
             make_snapshot.snapshot_gen(self._parent)
             

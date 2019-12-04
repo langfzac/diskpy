@@ -12,7 +12,7 @@ Created on Mon Jan 27 18:48:04 2014
 __version__ = "$Revision: 1 $"
 # $Source$
 
-__iversion__ = int(filter(str.isdigit,__version__))
+__iversion__ = int([i for i in __version__.split() if i.isdigit()][0])
 
 # External packages
 import pynbody
@@ -25,7 +25,7 @@ import os
 from diskpy import global_settings
 from diskpy.utils import strip_units
 from diskpy.pdmath import interp1dunits
-import ICgen_utils
+from . import ICgen_utils
 
     
 class pos:
@@ -51,11 +51,11 @@ class pos:
         # Check that sigma and rho have been generated
         if not hasattr(ICobj, 'rho'):
             
-            raise NameError,'rho could not be found in the IC object'
+            raise NameError('rho could not be found in the IC object')
         
         if not hasattr(ICobj,'sigma'):
             
-            raise NameError,'sigma could not be found in the IC object'
+            raise NameError('sigma could not be found in the IC object')
             
         if method == None:
         
@@ -68,8 +68,8 @@ class pos:
             ICobj.settings.pos_gen.method = method
             
         self.nParticles = ICobj.settings.pos_gen.nParticles
-        print 'Generating {0} particle positions using method: {1}'.format(\
-        self.nParticles, self.method)
+        print('Generating {0} particle positions using method: {1}'.format(\
+        self.nParticles, self.method))
         
         # Generate positions
         self._generate_r()
@@ -93,7 +93,7 @@ class pos:
         state.pop('_parent', None)
         
         # Now handle the possibly large arrays (too large to pickle)
-        for key,val in state.iteritems():
+        for key,val in state.items():
             
             if isinstance(val, np.ndarray):
                 
@@ -105,7 +105,7 @@ class pos:
         """
         This is required to make the object un-pickleable
         """
-        for key, val in d.iteritems():
+        for key, val in d.items():
             
             if isinstance(val, ICgen_utils.larray):
                 
@@ -160,8 +160,8 @@ class pos:
         rmax = 1.
         zmax = cdf_space_height(self._parent, rmax)
         L_cube = ((2 * np.pi*zmax * rmax**2 * n_glass_cube)/nParticles)**(1./3)
-        print 'zmax:', zmax
-        print 'L_cube:', L_cube
+        print('zmax:', zmax)
+        print('L_cube:', L_cube)
         # Re-scale the cube
         sn.g['pos'] *= L_cube
         # Round up a little extra to make sure num boxes is not zero
@@ -220,9 +220,9 @@ class pos:
         rsort = np.sort(r)
         rcut = 0.5*(rsort[nParticles-1]+rsort[nParticles])
         # If all the scaling is done right, rcut should be nearly 1
-        print "(rmax, rcut)", rmax, rcut
+        print("(rmax, rcut)", rmax, rcut)
         if abs(rcut-rmax)/rmax > 1e-2:
-            print 'Warning: rcut not good...might try differet nParticles'
+            print('Warning: rcut not good...might try differet nParticles')
         # Assign output
         mask = r < rcut
         pos = pos[mask]
@@ -269,7 +269,7 @@ class pos:
         method
         """
         
-        print 'Generating r positions'
+        print('Generating r positions')
         method = self.method
         
         if method == 'glass':
@@ -286,15 +286,15 @@ class pos:
             
         else:
             
-            raise ValueError, 'Unrecognized method for generating positions {}'\
-            .format(method)
+            raise ValueError('Unrecognized method for generating positions {}'\
+            .format(method))
             
     def _generate_z(self):
         """
         Generate z positions
         """
         
-        print 'Generating z positions'
+        print('Generating z positions')
         if self.method == 'glass':
             # The inverse CDF over z as a function of r
             cdf_inv_z = self._parent.rho.cdf_inv

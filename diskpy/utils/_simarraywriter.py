@@ -88,7 +88,7 @@ def _read_header(f):
     # Read the last line, should just be a bunch of --- lines
     hline = hline.strip()
     if hline != '-'*_line_length(colwidth):
-        raise RuntimeError, 'header format not what is expected'
+        raise RuntimeError('header format not what is expected')
     return colwidth, names, dtypes, units, ind    
 
 
@@ -206,7 +206,7 @@ def write_table(f, x, *args, **kwargs):
         if np.ndim(array) == 1:
             arrays[i] = array[:,None]
         elif np.ndim(array) != 2:
-            raise ValueError, 'Can only write tables for 1-D or 2-D arrays'
+            raise ValueError('Can only write tables for 1-D or 2-D arrays')
     save_arrays = []
     save_labels = []
     array_ind = []

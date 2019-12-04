@@ -58,7 +58,7 @@ def getpar(key, param={}):
         
     else:
         
-        raise ValueError, "Could not find {0} in param or defaults".format(key)
+        raise ValueError("Could not find {0} in param or defaults".format(key))
         
     return value
     
@@ -103,7 +103,7 @@ def make_director(sigma_min, sigma_max, r, resolution=1200, filename='snapshot')
     defaults = _directordefault
     if '#sigma_max' not in defaults:
 
-        raise KeyError,'Default .director file should have a line e.g. << #sigma_max 0.01 >>'
+        raise KeyError('Default .director file should have a line e.g. << #sigma_max 0.01 >>')
 
     sigma_max0 = defaults['#sigma_max']
     c0 = defaults['colgas'][3]
@@ -296,7 +296,7 @@ n_check=None):
 
     if (r_orb > 1) | (r_orb < 0):
 
-        raise ValueError, 'r_orb must be between 0 and 1'
+        raise ValueError('r_orb must be between 0 and 1')
 
     if isinstance(snapshot, str):
 
@@ -363,7 +363,7 @@ def find_param_names(simdir='.', paramfile=None, prefix=None):
                 import glob
                 names = glob.glob('*.param')
                 if len(names) != 1:
-                    print "could not find .param file"
+                    print("could not find .param file")
                     paramfile = None
                 else:
                     paramfile = names[0]

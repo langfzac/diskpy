@@ -79,7 +79,7 @@ class IterativeSolver():
                 zmax = 6. * h
             z = np.linspace(0, zmax, nz)
             if not pynbody.units.has_units(z):
-                raise ValueError, 'z has no units.  maybe zmax doesnt either'
+                raise ValueError('z has no units.  maybe zmax doesnt either')
         z = self._assume_h_units(z)
         rho0 = self.rho0(z, h, sigma)
         rzfactor = a * (1./R - 1./np.sqrt(R**2 + z**2))
@@ -144,7 +144,7 @@ class IterativeSolver():
             
         if not converged:
             
-            print 'WARNING: maxiter reached.  did not converge'
+            print('WARNING: maxiter reached.  did not converge')
             
         self.results = {'rho': self.rho[-1], 'z': self.z}
     
@@ -223,7 +223,7 @@ def similarity(p1, p2, forcePositive=False):
         p1[p1<0] = 0
         p2[p2<0] = 0
     elif np.any(p1 < 0) or np.any(p2 < 0):
-        raise ValueError, "Negative values present.  try using force Positive"
+        raise ValueError("Negative values present.  try using force Positive")
         
     bhattacharyya = -np.log(np.sqrt(p1*p2).sum())
     norm = -np.log(p1.sum())

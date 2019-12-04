@@ -17,7 +17,7 @@ import glob
 import gc
 
 # diskpy packages
-import ICgen_utils
+from . import ICgen_utils
 from diskpy.utils import configsave
 from diskpy.pdmath import extrap1d, digitize_threshold, binned_mean
 from diskpy.pychanga import load_acc
@@ -132,7 +132,7 @@ max_particles=None, est_eps=True, changa_args=''):
             command = ICgen_utils.changa_command(p_name, changa_preset, \
             changbin, '-gas +n 0 ' + changa_args)
             
-        print command
+        print(command)
         p = ICgen_utils.changa_run(command)
         p.wait()
         

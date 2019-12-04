@@ -15,7 +15,7 @@ SimArray = pynbody.array.SimArray
 import os
 import sys
 import re
-import cPickle as pickle
+import _pickle as pickle
 
 # diskpy modules
 from diskpy import global_settings
@@ -535,7 +535,7 @@ def est_eps(smoothlength_file, nstar=1):
 #                
 #    args_str = ''
 #    
-#    for key, val in args_dict.iteritems():
+#    for key, val in args_dict.items():
 #        
 #        if val == '':
 #            

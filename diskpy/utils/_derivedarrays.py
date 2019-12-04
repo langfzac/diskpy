@@ -24,7 +24,7 @@ SimArray = pynbody.array.SimArray
 
 import warnings
 
-import _simsnaputils as sutil
+from . import _simsnaputils as sutil
 
 kB = SimArray(1.0,'k')
 G = SimArray(1.0, 'G')
@@ -91,8 +91,8 @@ def u_dustVel(f):
     # cannot load 3D arrays.  This has been implemented on branch issue-379
     # of ibackus' fork, but the pull request has not been merged
     if (np.ndim(f[array_name]) != 2) or (f[array_name].shape[1] != 3):
-        raise RuntimeError, "dustVel is a 3D array but was not read as one."\
-        "  This is problem with pynbody"
+        raise RuntimeError("dustVel is a 3D array but was not read as one."\
+        "  This is problem with pynbody")
     return f[array_name]
 
 @pynbody.derived_array

@@ -113,7 +113,7 @@ def sbatch_script(workdir=None, param='snapshot.param', nodes=1, ppn=None,
     # Parse kwargs
     if kwargs is not None:
         
-        for key, val in kwargs.iteritems():
+        for key, val in kwargs.items():
             
             script += '#SBATCH -{0} {1}\n'.format(key, val)
             
@@ -148,8 +148,8 @@ def sbatch_script(workdir=None, param='snapshot.param', nodes=1, ppn=None,
         with open(savepath, 'w') as f:
             
             f.write(script)
-            print "Submission script saved to:", savepath
+            print("Submission script saved to:", savepath)
             
-        os.chmod(savepath, 0774)
+        os.fchmod(savepath, 0o774)
         
     return script

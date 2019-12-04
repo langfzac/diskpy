@@ -111,7 +111,7 @@ class T:
         
         if not hasattr(ICobj, 'sigma'):
             
-            raise RuntimeError, 'Sigma not found in initial conditions object'
+            raise RuntimeError('Sigma not found in initial conditions object')
             
         gamma = ICobj.settings.physical.gamma
         p = (gamma - 1.)/(gamma + 1.)
@@ -130,12 +130,12 @@ class T:
         
         if len(ind) > 1:
             
-            print 'WARNING: Multiple r_adiabatics found.  Selecting the lowest'
+            print('WARNING: Multiple r_adiabatics found.  Selecting the lowest')
             r_adiabatic = r[[ind[0]]]
             
         elif len(ind) < 1:
             
-            print 'WARNING: could not find r_adiabatic'
+            print('WARNING: could not find r_adiabatic')
             r_adiabatic = SimArray([0.],'au')
             
         else:
@@ -221,7 +221,7 @@ class T:
             
         else:
             
-            raise TypeError, 'Could not find temperature kind {0}'.format(kind)
+            raise TypeError('Could not find temperature kind {0}'.format(kind))
             
         # Apply max Temp cutoff
         if hasattr(params, 'Tmax'):

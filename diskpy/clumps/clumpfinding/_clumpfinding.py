@@ -67,7 +67,7 @@ def clump_tracker(fprefix, param=None, directory=None, nsmooth=32, verbose=True)
     nfiles = len(fnames)
     
     # Run the clump (halo) finder
-    if verbose: print "\n\nRunning clump finder on {} files\n\n".format(nfiles)
+    if verbose: print("\n\nRunning clump finder on {} files\n\n".format(nfiles))
     clumpnum_list = pFind_clumps(fnames, nsmooth, param, verbose=verbose)
     nclumps = np.zeros(nfiles, dtype=int)
     
@@ -77,15 +77,15 @@ def clump_tracker(fprefix, param=None, directory=None, nsmooth=32, verbose=True)
         
     if nclumps.max() <= 0:
         
-        if verbose: print 'No clumps found'
+        if verbose: print('No clumps found')
         return []
     
     # Calculate the physical properties of the clumps
-    if verbose: print "\n\nCalculating the physical of properties of clumps\n\n"
+    if verbose: print("\n\nCalculating the physical of properties of clumps\n\n")
     properties = pClump_properties(fnames, clumpnum_list)
     
     # Link clumps on consecutive time-steps
-    if verbose: print "\n\nLinking Clumps\n\n"
+    if verbose: print("\n\nLinking Clumps\n\n")
     link_list = pLink2(properties)
     # Link on multiple time-steps
     multilink_list = multilink(link_list)
@@ -194,7 +194,7 @@ def build_clumps(multilink_list, clump_pars_list, fnames=None, param=None):
     
     # Now fill in the clumps
     for iClump in range(nclumps):
-        print iClump
+        print(iClump)
         
         # Initialize a blank clump
         clump = blank_clump(clump_pars_list[iFirstClump], nt)
@@ -543,7 +543,7 @@ def clump_im(f, clump_array, width, qty='rho', resolution=1200, clim=None, clump
     plt.imshow(im_color, extent=extent, interpolation='none', aspect='equal')
     
     # Echo the color limits used
-    print 'clims used: {}'.format(clim)
+    print('clims used: {}'.format(clim))
     
     plt.close(fig1)
         
@@ -635,7 +635,7 @@ def clump_properties(f, clump_nums):
         
     except KeyError:
         
-        print 'Warning.  iorder not found.  Assuming 0,1,2,3...'
+        print('Warning.  iorder not found.  Assuming 0,1,2,3...')
         iorder = np.arange(len(f))
         
     particle_nums = np.arange(len(f))
@@ -719,7 +719,7 @@ def clump_properties(f, clump_nums):
         try:
             r_clump[i] = np.sqrt((p_mass*( (cm_pos**2).sum(1) )).sum()/m[[i]])
         except pynbody.units.UnitsException:
-            print 'i is: {}'.format(i)
+            print('i is: {}'.format(i))
             return p_mass, cm_pos, m
         
         particle_ids.append(particle_nums1[mask2])
@@ -775,7 +775,7 @@ def pFind_clumps(f_list, n_smooth=32, param=None, arg_string=None, verbose=True)
         
         arg_list.append([f_name, n_smooth, param, arg_string, i, verbose])
         
-    print arg_list
+    print(arg_list)
     
     # Set up the pool
     pool = Pool(n_proc)
@@ -856,7 +856,7 @@ def find_clumps(f, n_smooth=32, param=None, arg_string=None, seed=None, verbose=
     if len(err) > 0:
         
         err = '\n'.join(err)
-        raise RuntimeError, err
+        raise RuntimeError(err)
         
     # Parse areguments
     if isinstance(f, str):
@@ -906,7 +906,7 @@ def find_clumps(f, n_smooth=32, param=None, arg_string=None, seed=None, verbose=
     if verbose:
         
         for line in iter(p.stdout.readline, ''):
-            print line,
+            print(line,)
             
     p.wait()
     

@@ -178,7 +178,7 @@ def setupbins(x, bins=10, spacing='linear'):
             
         else:
             
-            raise ValueError, "Unrecognized spacing {0}".format(spacing)
+            raise ValueError("Unrecognized spacing {0}".format(spacing))
         
     else:
         # Bins is already binedges.  do nothing
@@ -216,7 +216,7 @@ def cdf(x, pdf):
     CDF = np.zeros(nx)
     CDF[1:] = cumtrapz(pdf,x)
     if CDF.max() <= 0.0:
-        raise ValueError, "PDF maximum is <= 0.  Cannot normalize"
+        raise ValueError("PDF maximum is <= 0.  Cannot normalize")
     CDF /= CDF.max()
     # Calculate the inverse CDF.
     # Assume CDF is approximately monotonic and sort to force it to be
@@ -280,7 +280,8 @@ def resolvedbins(x, y, minbins=200, ftol=None):
     for i in range(maxiter):
         
         # Linear spline interpolation
-        yspl = interp1d(x[binind], y[binind], kind='linear')
+        print(x[binind],"\n", y[binind],"\n")
+        yspl = interp1d(np.squeeze(x[binind]), np.squeeze(y[binind]), kind='linear')
         # Difference between interpolated and actual values (on the grid)
         diff = abs(y - yspl(x))
         
@@ -503,11 +504,11 @@ def meshinterp(xedges, y, z, kind='linear', bounds_error=False, fill_value=0,
     
     if z.shape != y.shape:
         
-        raise ValueError, 'y and z must have same shape'
+        raise ValueError('y and z must have same shape')
         
     if len(xedges) != len(y):
         
-        raise ValueError, 'x and y must have same len'
+        raise ValueError('x and y must have same len')
         
     # Handle units
     pos = [xedges, y, z]
@@ -670,9 +671,9 @@ def smoothstep(x,degree=5,rescale=False):
         try:
             x = (x - x.min())/(x.max() - x.min())
         except:
-            raise RuntimeError,'Could not rescale x.  Make sure x is an array'
+            raise RuntimeError('Could not rescale x.  Make sure x is an array')
 
-    if isinstance(x, (int, long, float, complex)):
+    if isinstance(x, (int, float, complex)):
 
         # x is a number, handle accordingly
         y = 0.0
@@ -742,7 +743,7 @@ def digitize_threshold(x, min_per_bin = 0, bins=10):
 
     if N.sum() < min_per_bin:
 
-        raise RuntimeError,'Not enough particles within the bin range'
+        raise RuntimeError('Not enough particles within the bin range')
 
     n_bins = len(bin_edges) - 1
 

@@ -30,10 +30,10 @@ def snap_param(snapshot):
         Same format as output of configparser
     """
     if not hasattr(snapshot, '_paramfile'):
-        raise RuntimeError, "Snapshot does not have attribute _paramfile"
+        raise RuntimeError("Snapshot does not have attribute _paramfile")
     
     pnew = {}
-    for k, v in snapshot._paramfile.iteritems():
+    for k, v in snapshot._paramfile.items():
         pnew[k] = str2num(v)
     
     if 'filename' in pnew:
@@ -103,7 +103,7 @@ def configparser(fname,ftype='auto'):
         ftype = a[-1].lower()
     if np.sum(types == ftype) == 0:
         # Could not find file type
-        print ('Could not determine config filetype...exiting')
+        print('Could not determine config filetype...exiting')
         return param
         # Try to determine filetype
     # --------------------------------------------------
@@ -174,7 +174,7 @@ def logparser(fname, verbose=False):
             line = f.readline().strip()
             if line[0] != '#':
                 
-                raise RuntimeError, 'Could not find parameters'
+                raise RuntimeError('Could not find parameters')
                 
             line = line.strip('#').strip()
             
@@ -194,7 +194,7 @@ def logparser(fname, verbose=False):
             line = f.readline().strip()
             if line[0] != '#':
                 
-                raise RuntimeError, 'Expected # at beginning of line: ' + line
+                raise RuntimeError('Expected # at beginning of line: ' + line)
                 
             if ':' not in line:
                 
@@ -209,7 +209,7 @@ def logparser(fname, verbose=False):
                 
                 if verbose:
                     
-                    print k, v
+                    print(k, v)
                     
         return param
     
@@ -228,7 +228,7 @@ def configsave(param,filename,ftype='auto'):
         a = filename.split('.')
         ftype = a[-1].lower()
     if ftype == 'param':
-        pars = sorted(param.iteritems())
+        pars = sorted(param.items())
         for n in range(len(pars)):
             f.write('{0:25s}= {1}\n'.format(pars[n][0],pars[n][1]))
     elif ftype == 'director':
@@ -250,8 +250,8 @@ def configsave(param,filename,ftype='auto'):
     f.close()
     
 def units_from_param(param):
-    raise RuntimeError, "diskpy.utils.units_from_param is depcreated.  "\
-    "use diskpy.pychanga.units_from_param"
+    raise RuntimeError("diskpy.utils.units_from_param is depcreated.  "\
+    "use diskpy.pychanga.units_from_param")
         
 def get_units(x):
     """
@@ -811,7 +811,7 @@ class logPrinter():
         
     def _print_screen(self, string):
         
-        print string
+        print(string)
         
     def _print(self, string):
         

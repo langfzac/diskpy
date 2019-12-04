@@ -17,7 +17,7 @@ SimArray = pynbody.array.SimArray
 import numpy as np
 from scipy.interpolate import interp1d
 #from scipy.interpolate import InterpolatedUnivariateSpline as spline
-from _compatible_spline import spline
+from ._compatible_spline import spline
 from scipy.integrate import quad, cumtrapz
 from scipy.integrate import simps
 import copy as copier
@@ -208,7 +208,7 @@ class sigma_gen:
         The optional argument, f, is the CDF binned over the radial bins
             
         """
-        print 'calculating CDF'
+        print('calculating CDF')
         # Calculate the CDF from prob
         r = self.r_bins
         r[0] = 0.0
@@ -226,7 +226,7 @@ class sigma_gen:
         
         self._CDF = f.copy()
         
-        print 'calculating inverse CDF'
+        print('calculating inverse CDF')
         # Calculate the inverse CDF.
         # Assume CDF is approximately monotonic and sort to force it to be
         ind = f.argsort()

@@ -18,8 +18,8 @@ import pynbody
 SimArray = pynbody.array.SimArray
 import numpy as np
 import gc
-import AddBinary
-import ICgen_utils
+from . import AddBinary
+from . import ICgen_utils
 
 from diskpy.utils import match_units, strip_units, configsave
 from diskpy.pychanga import make_param, make_director
@@ -37,13 +37,13 @@ def snapshot_gen(ICobj):
     star at origin with binary system who's center of mass lies at the origin and who's mass m1 +m2 = M
     """
     
-    print 'Generating snapshot...'
+    print('Generating snapshot...')
     # Constants
     G = SimArray(1.0,'G')
     # ------------------------------------
     # Load in things from ICobj
     # ------------------------------------
-    print 'Accessing data from ICs'
+    print('Accessing data from ICs')
     settings = ICobj.settings
     
     # snapshot file name
@@ -81,7 +81,7 @@ def snapshot_gen(ICobj):
     # -------------------------------------------------
     # Assign output
     # -------------------------------------------------
-    print 'Assigning data to snapshot'
+    print('Assigning data to snapshot')
     # Get units all set up
     m_unit = m_star.units
     pos_unit = r.units
@@ -196,7 +196,7 @@ def snapshot_gen(ICobj):
     snapshotBinary.star[1]['mass'] = SimArray(binsys.m2,m_unit)
     snapshotBinary.star['metals'] = SimArray(star_metals)
  
-    print 'Wrapping up'
+    print('Wrapping up')
     # Now set the star particle's tform to a negative number.  This allows
     # UW ChaNGa treat it as a sink particle.
     snapshotBinary.star['tform'] = -1.0

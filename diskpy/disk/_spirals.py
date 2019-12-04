@@ -161,7 +161,7 @@ def spiralpower_t(flist, rbins=100, thetabins=100, binspacing='log', rlim=None,
             
         else:
             
-            raise ValueError, 'Unrecognized binspacing {0}'.format(binspacing)
+            raise ValueError('Unrecognized binspacing {0}'.format(binspacing))
             
     # ----------------------------------------------------
     # Calculate power vs time
@@ -176,7 +176,7 @@ def spiralpower_t(flist, rbins=100, thetabins=100, binspacing='log', rlim=None,
             
             if do_load:
                 
-                print i
+                print(i)
                 f = pynbody.load(f, paramname=paramname)
             
             if center:
@@ -189,7 +189,7 @@ def spiralpower_t(flist, rbins=100, thetabins=100, binspacing='log', rlim=None,
         except IOError as e:
             
             # Couldn't load the file for some reason
-            print 'Could not load file...setting power and t to NaN'
+            print('Could not load file...setting power and t to NaN')
             p = np.ones(len(rbins) - 1) * np.nan
             power.append(p)
             t[i] = np.nan

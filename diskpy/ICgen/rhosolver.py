@@ -5,7 +5,7 @@ Created on Mon Aug  3 16:28:37 2015
 @author: ibackus
 """
 # external modules
-import cPickle as pickle
+import _pickle as pickle
 from scipy.integrate import cumtrapz
 from scipy.interpolate import interp1d
 import numpy as np
@@ -17,8 +17,8 @@ from diskpy.pdmath import meshinterp, resolvedbins
 from diskpy.disk import rho0_est, h_est
 from diskpy.utils import strip_units
 # Available vertical density profile solvers
-from vertical_solver import vertical_solver # deprecated vertical solver
-from iterativesolver import IterativeSolver
+from .vertical_solver import vertical_solver # deprecated vertical solver
+from .iterativesolver import IterativeSolver
 Solver = IterativeSolver
 
 # Constants
@@ -127,7 +127,7 @@ class rhosolver():
             
         else:
             # Not sure what's going on!
-            raise ValueError, 'Could not load rho'
+            raise ValueError('Could not load rho')
             
         return
         
@@ -180,7 +180,7 @@ def setup_r_bins(IC, r=None):
     rbins = resolvedbins(r, rho0, minbins=minbins, ftol=ftol)
     rbins = rbins.copy()
     
-    print '{} radial bins used for density calculation'.format(len(rbins))
+    print('{} radial bins used for density calculation'.format(len(rbins)))
     
     return rbins
         
@@ -200,7 +200,7 @@ def _updatez(z, rhoDict):
             z = z[:,None]
         if (np.ndim(z) != 2) or (z.shape[-1] != 1):
             
-            raise ValueError, 'Could not understand z input'
+            raise ValueError('Could not understand z input')
             
         else:
             
@@ -321,7 +321,7 @@ def calc_rho(IC, r=None, **kwargs):
         
         if (i%iPrint) == 0:
             
-            print 'Calculating rho:\t{0:.1f} %'.format(100.*i/nr)
+            print('Calculating rho:\t{0:.1f} %'.format(100.*i/nr))
         
         if R[[i]] > 0:
             
